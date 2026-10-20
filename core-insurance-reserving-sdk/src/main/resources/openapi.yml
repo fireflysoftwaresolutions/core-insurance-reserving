@@ -1,0 +1,829 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:18080
+  description: Generated server url
+tags:
+- name: Triangle Cells
+  description: One origin and development cell on a loss-development triangle
+- name: Reporting Extracts
+  description: Reference to a prepared reporting extract. This record is not a regulatory
+    filing.
+- name: Reserve Snapshots
+  description: Point-in-time reserving snapshot supplied by the actuarial process
+paths:
+  /api/v1/snapshots/{reserveSnapshotId}:
+    get:
+      tags:
+      - Reserve Snapshots
+      summary: Get ReserveSnapshot by id
+      description: Retrieve one ReserveSnapshot
+      operationId: getReserveSnapshotById
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ReserveSnapshot found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReserveSnapshotDTO"
+        "404":
+          description: ReserveSnapshot not found
+    put:
+      tags:
+      - Reserve Snapshots
+      summary: Update ReserveSnapshot
+      description: Update an existing ReserveSnapshot
+      operationId: updateReserveSnapshot
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveSnapshotDTO"
+        required: true
+      responses:
+        "200":
+          description: ReserveSnapshot updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReserveSnapshotDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: ReserveSnapshot not found
+    delete:
+      tags:
+      - Reserve Snapshots
+      summary: Delete ReserveSnapshot
+      description: Delete a ReserveSnapshot
+      operationId: deleteReserveSnapshot
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: ReserveSnapshot deleted
+        "404":
+          description: ReserveSnapshot not found
+  /api/v1/snapshots/{reserveSnapshotId}/extracts/{reportingExtractId}:
+    get:
+      tags:
+      - Reporting Extracts
+      summary: Get ReportingExtract by id
+      description: Retrieve one ReportingExtract
+      operationId: getReportingExtractById
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: reportingExtractId
+        in: path
+        description: Unique identifier of the ReportingExtract
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ReportingExtract found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReportingExtractDTO"
+        "404":
+          description: ReportingExtract not found
+    put:
+      tags:
+      - Reporting Extracts
+      summary: Update ReportingExtract
+      description: Update an existing ReportingExtract
+      operationId: updateReportingExtract
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: reportingExtractId
+        in: path
+        description: Unique identifier of the ReportingExtract
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportingExtractDTO"
+        required: true
+      responses:
+        "200":
+          description: ReportingExtract updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReportingExtractDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: ReportingExtract not found
+    delete:
+      tags:
+      - Reporting Extracts
+      summary: Delete ReportingExtract
+      description: Delete a ReportingExtract
+      operationId: deleteReportingExtract
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: reportingExtractId
+        in: path
+        description: Unique identifier of the ReportingExtract
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: ReportingExtract deleted
+        "404":
+          description: ReportingExtract not found
+  /api/v1/snapshots/{reserveSnapshotId}/cells/{triangleCellId}:
+    get:
+      tags:
+      - Triangle Cells
+      summary: Get TriangleCell by id
+      description: Retrieve one TriangleCell
+      operationId: getTriangleCellById
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: triangleCellId
+        in: path
+        description: Unique identifier of the TriangleCell
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: TriangleCell found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TriangleCellDTO"
+        "404":
+          description: TriangleCell not found
+    put:
+      tags:
+      - Triangle Cells
+      summary: Update TriangleCell
+      description: Update an existing TriangleCell
+      operationId: updateTriangleCell
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: triangleCellId
+        in: path
+        description: Unique identifier of the TriangleCell
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TriangleCellDTO"
+        required: true
+      responses:
+        "200":
+          description: TriangleCell updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TriangleCellDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: TriangleCell not found
+    delete:
+      tags:
+      - Triangle Cells
+      summary: Delete TriangleCell
+      description: Delete a TriangleCell
+      operationId: deleteTriangleCell
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: triangleCellId
+        in: path
+        description: Unique identifier of the TriangleCell
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: TriangleCell deleted
+        "404":
+          description: TriangleCell not found
+  /api/v1/snapshots:
+    post:
+      tags:
+      - Reserve Snapshots
+      summary: Create ReserveSnapshot
+      description: Create a ReserveSnapshot
+      operationId: createReserveSnapshot
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveSnapshotDTO"
+        required: true
+      responses:
+        "201":
+          description: ReserveSnapshot created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReserveSnapshotDTO"
+        "400":
+          description: Invalid data
+  /api/v1/snapshots/{reserveSnapshotId}/extracts:
+    post:
+      tags:
+      - Reporting Extracts
+      summary: Create ReportingExtract
+      description: Create a ReportingExtract
+      operationId: createReportingExtract
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportingExtractDTO"
+        required: true
+      responses:
+        "201":
+          description: ReportingExtract created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReportingExtractDTO"
+        "400":
+          description: Invalid data
+  /api/v1/snapshots/{reserveSnapshotId}/extracts/filter:
+    post:
+      tags:
+      - Reporting Extracts
+      summary: Filter reportingExtracts
+      description: Retrieve a page of reportingExtracts matching the filter
+      operationId: filterReportingExtracts
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestReportingExtractDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseReportingExtractDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/snapshots/{reserveSnapshotId}/cells:
+    post:
+      tags:
+      - Triangle Cells
+      summary: Create TriangleCell
+      description: Create a TriangleCell
+      operationId: createTriangleCell
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TriangleCellDTO"
+        required: true
+      responses:
+        "201":
+          description: TriangleCell created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TriangleCellDTO"
+        "400":
+          description: Invalid data
+  /api/v1/snapshots/{reserveSnapshotId}/cells/filter:
+    post:
+      tags:
+      - Triangle Cells
+      summary: Filter triangleCells
+      description: Retrieve a page of triangleCells matching the filter
+      operationId: filterTriangleCells
+      parameters:
+      - name: reserveSnapshotId
+        in: path
+        description: Unique identifier of the ReserveSnapshot
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestTriangleCellDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseTriangleCellDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/snapshots/filter:
+    post:
+      tags:
+      - Reserve Snapshots
+      summary: Filter reserveSnapshots
+      description: Retrieve a page of reserveSnapshots matching the filter
+      operationId: filterReserveSnapshots
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestReserveSnapshotDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseReserveSnapshotDTO"
+        "400":
+          description: Invalid filter request
+components:
+  schemas:
+    ReserveSnapshotDTO:
+      required:
+      - lineOfBusiness
+      - snapshotDate
+      - snapshotStatus
+      - tenantId
+      type: object
+      properties:
+        reserveSnapshotId:
+          type: string
+          format: uuid
+          readOnly: true
+        tenantId:
+          type: string
+          format: uuid
+        snapshotDate:
+          type: string
+          format: date
+        lineOfBusiness:
+          type: string
+          enum:
+          - MOTOR
+          - PROPERTY
+          - LIABILITY
+          - LIFE
+          - HEALTH
+          - MARINE
+          - AVIATION
+          - ACCIDENT
+          - OTHER
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        snapshotStatus:
+          type: string
+          enum:
+          - DRAFT
+          - SUBMITTED
+          - ACCEPTED
+        sourceReference:
+          maxLength: 128
+          minLength: 0
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ReportingExtractDTO:
+      required:
+      - extractType
+      - preparedAt
+      - reserveSnapshotId
+      type: object
+      properties:
+        reportingExtractId:
+          type: string
+          format: uuid
+          readOnly: true
+        reserveSnapshotId:
+          type: string
+          format: uuid
+        extractType:
+          type: string
+          enum:
+          - TRIANGLE
+          - IFRS17_DATA
+          - SOLVENCY_II_DATA
+        documentId:
+          type: string
+          format: uuid
+        preparedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    TriangleCellDTO:
+      required:
+      - developmentPeriod
+      - originPeriod
+      - reserveSnapshotId
+      type: object
+      properties:
+        triangleCellId:
+          type: string
+          format: uuid
+          readOnly: true
+        reserveSnapshotId:
+          type: string
+          format: uuid
+        originPeriod:
+          maxLength: 16
+          minLength: 0
+          type: string
+        developmentPeriod:
+          type: integer
+          format: int32
+        paidAmount:
+          type: number
+        incurredAmount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    FilterOptions:
+      type: object
+      properties:
+        caseInsensitiveStrings:
+          type: boolean
+        includeInheritedFields:
+          type: boolean
+      description: Filter options for customizing filter behavior
+    FilterRequestReportingExtractDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/ReportingExtractDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationRequest:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          description: The zero-based page number to retrieve.
+          format: int32
+          example: 0
+          default: 0
+        pageSize:
+          type: integer
+          description: The number of items per page.
+          format: int32
+          example: 10
+          default: 10
+        sortBy:
+          type: string
+          description: The field to sort the results by.
+          example: name
+        sortDirection:
+          type: string
+          description: "The direction of sorting, either ASC or DESC."
+          example: DESC
+          default: DESC
+      description: "Represents a pagination request for retrieving paginated results,\
+        \ including page number, size, sort field, and direction."
+    RangeFilter:
+      type: object
+      properties:
+        ranges:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/RangeObject"
+          description: Map of field names to their range criteria
+      description: Represents range filters for numeric fields
+    RangeObject:
+      type: object
+      properties:
+        from:
+          type: object
+          description: Start value of the range
+        to:
+          type: object
+          description: End value of the range
+      description: Represents a range with from and to values
+    PaginationResponseReportingExtractDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/ReportingExtractDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestTriangleCellDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/TriangleCellDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseTriangleCellDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/TriangleCellDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestReserveSnapshotDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/ReserveSnapshotDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseReserveSnapshotDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/ReserveSnapshotDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
