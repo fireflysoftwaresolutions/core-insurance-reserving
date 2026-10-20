@@ -1,4 +1,17 @@
-# core-insurance-reserving
+<a href="https://fireflysoftware.io/openplatform/">
+<picture>
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-narrow-dark.svg">
+  <source media="(max-width: 640px)" srcset="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-narrow-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-dark.svg">
+  <img src="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-light.svg" alt="Firefly OpenPlatform - Core Insurance - Reserving" width="100%">
+</picture>
+</a>
+
+# Firefly OpenPlatform - Core Insurance - Reserving
+
+Developed by the Firefly Software Foundation. [dev@fireflysoftware.io](mailto:dev@fireflysoftware.io)
+
+[Website](https://fireflysoftware.io/) · [OpenPlatform](https://fireflysoftware.io/openplatform/) · [Module catalogue](https://fireflysoftware.io/openplatform/modules/)
 
 Core repository for reserving snapshots, loss-development triangle cells, and reporting extracts.
 
@@ -108,7 +121,7 @@ mvn clean verify
 mvn -pl core-insurance-reserving-web spring-boot:run
 ```
 
-Java 25 and Maven 3.9 or newer. The parent POM is `com.firefly:firefly-parent:1.0.0-SNAPSHOT`.
+Java 25 and Maven 3.9 or newer. The parent POM is `com.firefly:firefly-parent:1.1.0-SNAPSHOT`.
 
 ## Stack
 
