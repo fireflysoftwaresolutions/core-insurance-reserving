@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core-insurance-reserving-core</artifactId>
+    <name>core-insurance-reserving-core</name>
 
     <dependencies>
         <dependency>

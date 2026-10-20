@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core-insurance-reserving-interfaces</artifactId>
+    <name>core-insurance-reserving-interfaces</name>
 
     <dependencies>
         <dependency>
